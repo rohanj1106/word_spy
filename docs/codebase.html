@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trove — Codebase Explained</title>
+  <title>Word Spy — Codebase Explained</title>
   <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
   <style>
     :root {
@@ -240,7 +240,7 @@
 <body>
 
 <header>
-  <h1>✨ <span>Trove</span> — Codebase Explained</h1>
+  <h1>✨ <span>Word Spy</span> — Codebase Explained</h1>
   <p>A complete walkthrough of every framework, pattern, and file in the project</p>
 </header>
 
@@ -263,7 +263,7 @@
 <!-- ── 1. OVERVIEW ── -->
 <section id="overview">
   <h2><span class="num">1</span> Project Overview</h2>
-  <p>Trove is a word puzzle game inspired by Word Trip / Wordscapes. Players swipe letters to form words, unlock levels sequentially, earn coins, and listen to ambient music while playing.</p>
+  <p>Word Spy is a word puzzle game inspired by Word Trip / Wordscapes. Players swipe letters to form words, unlock levels sequentially, earn coins, and listen to ambient music while playing.</p>
 
   <div class="diagram-wrap">
     <div class="mermaid">
@@ -305,7 +305,7 @@ graph LR
   <h2><span class="num">2</span> Dart — The Language</h2>
   <p>Flutter uses <strong>Dart</strong>, a language created by Google. It feels similar to JavaScript or Java but compiles to native ARM machine code — making Flutter apps as fast as native iOS/Android apps.</p>
 
-  <h3>Key Dart Features Used in Trove</h3>
+  <h3>Key Dart Features Used in Word Spy</h3>
   <div class="card-grid">
     <div class="card">
       <h4>Null Safety</h4>
@@ -328,7 +328,7 @@ graph LR
   <pre><code>// Dart syntax quick reference
 
 // Variables
-String name = 'Trove';
+String name = 'Word Spy';
 int coins = 100;
 bool isLoading = true;
 List&lt;String&gt; words = ['WAVE', 'SEA'];
@@ -353,7 +353,7 @@ final (x, y, scale) = (0.5, 0.3, 1.2);  // record destructuring</code></pre>
 <!-- ── 3. FLUTTER ── -->
 <section id="flutter">
   <h2><span class="num">3</span> Flutter — The UI Framework</h2>
-  <p>Flutter is Google's cross-platform UI toolkit. Write once, run on iOS, Android, Web, Mac, Windows. Trove targets <strong>iOS + Android + Web</strong>.</p>
+  <p>Flutter is Google's cross-platform UI toolkit. Write once, run on iOS, Android, Web, Mac, Windows. Word Spy targets <strong>iOS + Android + Web</strong>.</p>
 
   <div class="callout">
     <strong>Core idea:</strong> Everything is a <strong>Widget</strong> — buttons, text, padding, animations, even the app itself. Widgets nest to form a tree. Flutter redraws the tree when state changes.
@@ -377,8 +377,8 @@ graph TD
   <h3>The Widget Tree</h3>
   <pre><code>// How Flutter builds UI — nested widgets form a tree
 Scaffold(
-  appBar: AppBar(title: Text('Trove')),
-  body: TroveBackground(          // custom widget
+  appBar: AppBar(title: Text('Word Spy')),
+  body: _MapBackground(          // custom widget
     child: Column(
       children: [
         Text('Score: 100'),       // leaf widget
@@ -492,7 +492,7 @@ await player.play(AssetSource('audio/bg_music.mp3'));</code></pre>
 <!-- ── 5. ARCHITECTURE ── -->
 <section id="architecture">
   <h2><span class="num">5</span> Architecture — MVVM</h2>
-  <p>Trove follows <strong>MVVM</strong> — Model / ViewModel / View. Each layer has one responsibility and doesn't know about the layers above it.</p>
+  <p>Word Spy follows <strong>MVVM</strong> — Model / ViewModel / View. Each layer has one responsibility and doesn't know about the layers above it.</p>
 
   <div class="diagram-wrap">
     <div class="mermaid">
@@ -541,7 +541,7 @@ graph TB
 <section id="structure">
   <h2><span class="num">6</span> File Structure</h2>
   <div class="tree">
-<span class="folder">trove/</span><br/>
+<span class="folder">word_spy/</span><br/>
 ├── <span class="folder">lib/</span><br/>
 │   ├── <span class="file">main.dart</span>              <span class="note">← App entry point. Sets orientation, status bar, runs app.</span><br/>
 │   ├── <span class="file">app.dart</span>               <span class="note">← GoRouter setup + MaterialApp + ThemeData builder.</span><br/>
@@ -561,11 +561,11 @@ graph TB
 │   │   ├── <span class="folder">utils/</span><br/>
 │   │   │   └── <span class="file">word_validator.dart</span>    <span class="note">← Word validation helper (future use)</span><br/>
 │   │   └── <span class="folder">widgets/</span><br/>
-│   │       └── <span class="file">trove_background.dart</span> <span class="note">← CustomPainter landscape background used on all screens</span><br/>
+│   │       └── <span class="file">_map_background.dart</span> <span class="note">← CustomPainter landscape background used on all screens</span><br/>
 │   │<br/>
 │   ├── <span class="folder">features/</span>            <span class="note">← One folder per screen/feature (vertical slice)</span><br/>
 │   │   ├── <span class="folder">intro/screens/</span><br/>
-│   │   │   └── <span class="file">intro_story_screen.dart</span>    <span class="note">← 4-page animated cinematic. Twinkling stars, TROVE reveal.</span><br/>
+│   │   │   └── <span class="file">intro_story_screen.dart</span>    <span class="note">← 4-page animated cinematic. Twinkling stars, Word Spy reveal.</span><br/>
 │   │   ├── <span class="folder">home/screens/</span><br/>
 │   │   │   └── <span class="file">home_screen.dart</span>           <span class="note">← Logo, coin badge, daily challenge card, Play button.</span><br/>
 │   │   ├── <span class="folder">levels/screens/</span><br/>
@@ -629,7 +629,7 @@ Text('${progress.coins} coins')  // updates automatically
 // READ — one-time action, doesn't rebuild
 ref.read(userProgressProvider.notifier).addCoins(10);</code></pre>
 
-  <h3>Providers in Trove</h3>
+  <h3>Providers in Word Spy</h3>
   <table>
     <tr><th>Provider</th><th>State</th><th>Actions</th></tr>
     <tr><td><code>userProgressProvider</code></td><td>coins, streak, completedPuzzleIds, isPremium</td><td>addCoins, spendCoins, markPuzzleComplete</td></tr>
@@ -673,7 +673,7 @@ context.pop();</code></pre>
 
   <h3>IntroStoryScreen</h3>
   <div class="card">
-    <p>4-page cinematic sequence. Uses <code>AnimationController</code> with <code>repeat()</code> for twinkling stars. Each page fades in text with <code>FadeTransition + SlideTransition</code>. A <code>Timer</code> auto-advances pages every 4 seconds. Last page shows the TROVE logo with a gold <code>ShaderMask</code> and a "Begin Adventure" button that navigates to <code>/</code>.</p>
+    <p>4-page cinematic sequence. Uses <code>AnimationController</code> with <code>repeat()</code> for twinkling stars. Each page fades in text with <code>FadeTransition + SlideTransition</code>. A <code>Timer</code> auto-advances pages every 4 seconds. Last page shows the Word Spy logo with a gold <code>ShaderMask</code> and a "Begin Adventure" button that navigates to <code>/</code>.</p>
   </div>
 
   <h3>HomeScreen</h3>
@@ -745,7 +745,7 @@ context.pop();</code></pre>
       <div class="flow-label">App Launch</div>
       <div class="flow-desc">
         <code>main()</code> runs. Sets portrait orientation, transparent status bar. Always routes to <code>/intro</code>.
-        <span>main.dart → TroveApp(initialRoute: '/intro')</span>
+        <span>main.dart → WordSpyApp(initialRoute: '/intro')</span>
       </div>
     </div>
     <div class="flow-step">
@@ -807,7 +807,7 @@ context.pop();</code></pre>
 </main>
 
 <footer style="text-align:center;padding:40px;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px;">
-  Trove Codebase Documentation · Built with Flutter 3.41.2 · Dart 3
+  Word Spy Codebase Documentation · Built with Flutter 3.41.2 · Dart 3
 </footer>
 
 <script>

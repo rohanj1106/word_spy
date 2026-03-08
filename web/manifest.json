@@ -1,6 +1,6 @@
 {
-    "name": "trove",
-    "short_name": "trove",
+    "name": "Word Spy",
+    "short_name": "Word Spy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -15,7 +15,7 @@ reveal the full postcard — a beautifully illustrated scene with a short travel
 
 ## Architecture: MVVM (Feature-first Hybrid)
 
-Same architecture as the Trove skeleton (`mvvm-architecture` branch):
+Same architecture as the project skeleton (`mvvm-architecture` branch):
 - **Model** → `lib/core/models/` (shared data structures)
 - **Service** → `lib/core/services/` (data loading, persistence)
 - **Provider** → `lib/core/providers/` (shared Riverpod state)
