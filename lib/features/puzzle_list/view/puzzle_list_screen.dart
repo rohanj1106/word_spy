@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_colors.dart';
@@ -33,9 +36,28 @@ class PuzzleListScreen extends ConsumerWidget {
 
           return Stack(
             children: [
-              // ── Gradient header bg ──────────────────────────
+              // ── Chapter image background ──────────────────────
+              Positioned.fill(
+                child: _buildBackground(chapter.city),
+              ),
+
+              // ── Snake path outline──────────────
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _SnakePathPainter(
+                    total: total,
+                    perRow: 3,
+                    spacing: AppSizes.sm.toDouble(),
+                    aspect: 1.35,
+                  ),
+                ),
+              ),
+
+              // ── Gradient header bg (kept on top of animation) ───
               Positioned(
-                top: 0, left: 0, right: 0,
+                top: 0,
+                left: 0,
+                right: 0,
                 height: 220,
                 child: Container(
                   decoration: BoxDecoration(
@@ -50,9 +72,11 @@ class PuzzleListScreen extends ConsumerWidget {
 
               // Decorative circle
               Positioned(
-                right: -40, top: -40,
+                right: -40,
+                top: -40,
                 child: Container(
-                  width: 200, height: 200,
+                  width: 200,
+                  height: 200,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white.withValues(alpha: 0.06),
@@ -110,8 +134,8 @@ class PuzzleListScreen extends ConsumerWidget {
                               borderRadius:
                                   BorderRadius.circular(AppSizes.radiusPill),
                               border: Border.all(
-                                  color: AppColors.accent
-                                      .withValues(alpha: 0.5)),
+                                  color:
+                                      AppColors.accent.withValues(alpha: 0.5)),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -136,8 +160,8 @@ class PuzzleListScreen extends ConsumerWidget {
 
                     // ── Progress summary ─────────────────────────
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppSizes.lg),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: AppSizes.lg),
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: AppSizes.md, vertical: AppSizes.sm),
@@ -152,8 +176,8 @@ class PuzzleListScreen extends ConsumerWidget {
                           children: [
                             Text(
                               '$solved / $total puzzles solved',
-                              style: AppTypography.caption(
-                                  color: Colors.white70),
+                              style:
+                                  AppTypography.caption(color: Colors.white70),
                             ),
                             const Spacer(),
                             // Dot progress
@@ -168,8 +192,7 @@ class PuzzleListScreen extends ConsumerWidget {
                                     shape: BoxShape.circle,
                                     color: done
                                         ? AppColors.accent
-                                        : Colors.white
-                                            .withValues(alpha: 0.2),
+                                        : Colors.white.withValues(alpha: 0.2),
                                   ),
                                 );
                               }),
@@ -183,47 +206,71 @@ class PuzzleListScreen extends ConsumerWidget {
 
                     // ── Puzzle grid ──────────────────────────────
                     Expanded(
-                      child: GridView.builder(
-                        padding: const EdgeInsets.fromLTRB(
-                            AppSizes.lg, 0, AppSizes.lg, AppSizes.xxl),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: AppSizes.sm,
-                          mainAxisSpacing: AppSizes.sm,
-                          childAspectRatio: 1.35,
-                        ),
-                        itemCount: total,
-                        itemBuilder: (context, i) {
-                          final puzzle = chapter.puzzles[i];
-                          final puzzleNum = i + 1;
-                          final isComplete = progress.completedPuzzleIds
-                              .contains(puzzle.id);
-                          // Locked if previous puzzle not done (first is always open)
-                          final isLocked = i > 0 &&
-                              !progress.completedPuzzleIds
-                                  .contains(chapter.puzzles[i - 1].id);
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        const perRow = 3;
+                        final spacing = AppSizes.sm.toDouble();
+                        final aspect = 1.35;
+                        final centers = _computeSnakeCenters(
+                            total, perRow, constraints.biggest, spacing, aspect);
 
-                          return _PuzzleCell(
-                            puzzle: puzzle,
-                            number: puzzleNum,
-                            isComplete: isComplete,
-                            isLocked: isLocked,
-                            isCurrent: !isComplete && !isLocked,
-                            index: i,
-                            onTap: isLocked
-                                ? null
-                                : () => context.push(
-                                    '/puzzle/$chapterId/$puzzleNum'),
-                          ).animate()
-                            .fadeIn(
-                              delay: Duration(milliseconds: 40 * i),
-                              duration: 350.ms)
-                            .scale(
-                              begin: const Offset(0.9, 0.9),
-                              curve: Curves.easeOut);
-                        },
-                      ),
+                        return Stack(
+                          children: [
+                            // draw connecting line behind cells
+                            CustomPaint(
+                              size: constraints.biggest,
+                              painter: _SnakePathPainter(
+                                total: total,
+                                perRow: perRow,
+                                spacing: spacing,
+                                aspect: aspect,
+                              ),
+                            ),
+                            // place each cell at computed center
+                            ...List.generate(total, (i) {
+                              final puzzle = chapter.puzzles[i];
+                              final puzzleNum = i + 1;
+                              final isComplete =
+                                  progress.completedPuzzleIds.contains(puzzle.id);
+                              final isLocked = i > 0 &&
+                                  !progress.completedPuzzleIds
+                                      .contains(chapter.puzzles[i - 1].id);
+                              final center = centers[i];
+                              // dimensions
+                              final cellWidth =
+                                  (constraints.maxWidth -
+                                          (perRow - 1) * spacing) /
+                                      perRow;
+                              final cellHeight = cellWidth * aspect;
+
+                              return Positioned(
+                                left: center.dx - cellWidth / 2,
+                                top: center.dy - cellHeight / 2,
+                                width: cellWidth,
+                                height: cellHeight,
+                                child: _PuzzleCell(
+                                  puzzle: puzzle,
+                                  number: puzzleNum,
+                                  isComplete: isComplete,
+                                  isLocked: isLocked,
+                                  isCurrent: !isComplete && !isLocked,
+                                  index: i,
+                                  onTap: isLocked
+                                      ? null
+                                      : () => context.push(
+                                          '/puzzle/$chapterId/$puzzleNum'),
+                                ).animate()
+                                  .fadeIn(
+                                      delay:
+                                          Duration(milliseconds: 40 * i),
+                                      duration: 350.ms)
+                                  .scale(
+                                      begin: const Offset(0.9, 0.9),
+                                      curve: Curves.easeOut),
+                              );
+                            }),
+                          ],
+                        );
+                      }),
                     ),
                   ],
                 ),
@@ -248,6 +295,114 @@ class PuzzleListScreen extends ConsumerWidget {
     final picked = gradients[hash % gradients.length];
     return [picked[0], picked[1]];
   }
+
+  Widget _buildBackground(String city) {
+    final lower = city.toLowerCase();
+    if (lower.contains('london')) {
+      return Image.network(
+        'https://source.unsplash.com/featured/800x600/?london,bridge',
+        fit: BoxFit.cover,
+      );
+    }
+    if (lower.contains('paris')) {
+      return Image.network(
+        'https://source.unsplash.com/featured/800x600/?paris,eiffel',
+        fit: BoxFit.cover,
+      );
+    }
+
+    const assets = [
+      'assets/images/bg_ancient.jpg',
+      'assets/images/bg_cosmos.jpg',
+      'assets/images/bg_forest.jpg',
+      'assets/images/bg_ocean.jpg',
+      'assets/images/bg_space.jpg',
+      'assets/images/background.jpg',
+    ];
+    final hash = city.codeUnits.fold(0, (a, b) => a + b);
+    final idx = hash % assets.length;
+    return Image.asset(
+      assets[idx],
+      fit: BoxFit.cover,
+    );
+  }
+
+  /// compute center positions of total items arranged in snake path
+  List<Offset> _computeSnakeCenters(int total, int perRow, Size size,
+      double spacing, double aspect) {
+    final cellWidth = (size.width - (perRow - 1) * spacing) / perRow;
+    final cellHeight = cellWidth * aspect;
+    final rows = (total + perRow - 1) ~/ perRow;
+
+    final centers = <Offset>[];
+    for (var r = 0; r < rows; r++) {
+      final start = r * perRow;
+      final end = min(total, start + perRow);
+      final leftToRight = r.isEven;
+      for (var j = 0; j < end - start; j++) {
+        var cx = j * (cellWidth + spacing) + cellWidth / 2;
+        if (!leftToRight) cx = size.width - cx;
+        final cy = r * (cellHeight + spacing) + cellHeight / 2 + 240; // push down past header
+        centers.add(Offset(cx, cy));
+      }
+    }
+    return centers;
+  }
+
+// ── Snake path painter ─────────────────────────────────────────────────────
+
+class _SnakePathPainter extends CustomPainter {
+  // no changes here
+  final int total;
+  final int perRow;
+  final double spacing;
+  final double aspect;
+
+  _SnakePathPainter({
+    required this.total,
+    required this.perRow,
+    required this.spacing,
+    required this.aspect,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.accent.withOpacity(0.6)
+      ..strokeWidth = 4
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    final cellWidth = (size.width - (perRow - 1) * spacing) / perRow;
+    final cellHeight = cellWidth * aspect;
+    final rows = (total + perRow - 1) ~/ perRow;
+
+    final path = Path();
+    for (var r = 0; r < rows; r++) {
+      final start = r * perRow;
+      final end = min(total, start + perRow);
+      final leftToRight = r.isEven;
+      for (var j = 0; j < end - start; j++) {
+        final i = start + j;
+        var cx = j * (cellWidth + spacing) + cellWidth / 2;
+        if (!leftToRight) cx = size.width - cx;
+        final cy = r * (cellHeight + spacing) + cellHeight / 2;
+        if (i == 0) {
+          path.moveTo(cx, cy);
+        } else {
+          path.lineTo(cx, cy);
+        }
+      }
+    }
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _SnakePathPainter old) =>
+      old.total != total || old.perRow != perRow ||
+      old.spacing != spacing || old.aspect != aspect;
+}
 }
 
 // ── Puzzle cell ───────────────────────────────────────────────────────────────
@@ -383,7 +538,8 @@ class _PuzzleCell extends StatelessWidget {
               Text(
                 '${puzzle.words.where((w) => !w.isBonus).length} words',
                 style: AppTypography.caption(
-                  color: isComplete ? AppColors.accent.withValues(alpha: 0.7)
+                  color: isComplete
+                      ? AppColors.accent.withValues(alpha: 0.7)
                       : Colors.white38,
                 ).copyWith(fontSize: 10),
               ),
