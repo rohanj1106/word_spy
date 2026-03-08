@@ -1,0 +1,32 @@
+name: word_spy
+description: Word Spy — The Postcard Traveller. Find hidden words in postcards from cities worldwide.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.18.0
+  go_router: ^14.0.0
+  flutter_riverpod: ^2.5.0
+  shared_preferences: ^2.3.0
+  google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
+  audioplayers: ^6.1.0
+  lottie: ^3.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/chapters/chapters.json
+    - assets/audio/
+    - assets/images/
+    - assets/animations/

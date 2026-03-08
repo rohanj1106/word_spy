@@ -1,0 +1,217 @@
+[
+  {
+    "id": "p001",
+    "theme": "Ocean",
+    "difficulty": "beginner",
+    "letterSet": ["S", "E", "A", "W", "V", "E"],
+    "requiredWords": [
+      {
+        "word": "WAVE",
+        "definition": "A ridge of water moving across the surface of a body of water.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "SEA",
+        "definition": "The vast body of salt water that covers most of the earth.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "SAVE",
+        "definition": "Keep safe or rescue from harm or danger.",
+        "partOfSpeech": "verb"
+      },
+      {
+        "word": "EASE",
+        "definition": "Absence of difficulty or effort; freedom from pain or discomfort.",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "bonusWords": [
+      {
+        "word": "AWE",
+        "definition": "A feeling of reverential respect mixed with wonder or fear.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "SAW",
+        "definition": "Past tense of see; to have perceived with the eyes.",
+        "partOfSpeech": "verb"
+      }
+    ]
+  },
+  {
+    "id": "p002",
+    "theme": "Space",
+    "difficulty": "beginner",
+    "letterSet": ["S", "T", "A", "R", "O", "N"],
+    "requiredWords": [
+      {
+        "word": "STAR",
+        "definition": "A fixed luminous point in the night sky, a large ball of burning gas.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "RANT",
+        "definition": "To speak or shout at length in a wild, impassioned way.",
+        "partOfSpeech": "verb"
+      },
+      {
+        "word": "TORN",
+        "definition": "Past participle of tear; pulled apart by force.",
+        "partOfSpeech": "adjective"
+      },
+      {
+        "word": "SNOT",
+        "definition": "Mucus from the nose.",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "bonusWords": [
+      {
+        "word": "ARTS",
+        "definition": "The expression of creative skill in painting, music, or other activities.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "OARS",
+        "definition": "Plural of oar; a pole with a flat blade used for rowing a boat.",
+        "partOfSpeech": "noun"
+      }
+    ]
+  },
+  {
+    "id": "p003",
+    "theme": "Forest",
+    "difficulty": "beginner",
+    "letterSet": ["T", "R", "E", "E", "S", "L"],
+    "requiredWords": [
+      {
+        "word": "TREE",
+        "definition": "A woody perennial plant, typically having a single stem growing to considerable height.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "REEL",
+        "definition": "A cylinder on which film, wire, or thread is wound.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "LEER",
+        "definition": "To look in a sly or lascivious manner.",
+        "partOfSpeech": "verb"
+      },
+      {
+        "word": "STEEL",
+        "definition": "A hard strong grey or bluish-grey alloy of iron with carbon.",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "bonusWords": [
+      {
+        "word": "EELS",
+        "definition": "Plural of eel; a snake-like fish.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "LEST",
+        "definition": "With the intention of preventing; for fear that.",
+        "partOfSpeech": "conjunction"
+      }
+    ]
+  },
+  {
+    "id": "p004",
+    "theme": "Ancient Rome",
+    "difficulty": "explorer",
+    "letterSet": ["E", "M", "P", "I", "R", "E", "S"],
+    "requiredWords": [
+      {
+        "word": "EMPIRE",
+        "definition": "An extensive group of states under a single supreme authority.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "SPIRE",
+        "definition": "A tapering conical or pyramidal structure on the top of a building.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "MISER",
+        "definition": "A person who hoards wealth and spends as little money as possible.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "PRIME",
+        "definition": "Of first importance; the most flourishing stage of something.",
+        "partOfSpeech": "adjective"
+      },
+      {
+        "word": "RIPEN",
+        "definition": "To become or make ripe; to develop to maturity.",
+        "partOfSpeech": "verb"
+      }
+    ],
+    "bonusWords": [
+      {
+        "word": "PRIES",
+        "definition": "To inquire too closely into another's affairs; to be nosy.",
+        "partOfSpeech": "verb"
+      },
+      {
+        "word": "EMIRS",
+        "definition": "Plural of emir; a Muslim ruler or military commander.",
+        "partOfSpeech": "noun"
+      }
+    ]
+  },
+  {
+    "id": "p005",
+    "theme": "Cosmos",
+    "difficulty": "voyager",
+    "letterSet": ["G", "A", "L", "A", "X", "I", "E", "S"],
+    "requiredWords": [
+      {
+        "word": "GALAXIES",
+        "definition": "Systems of millions or billions of stars, with gas and dust, held together by gravity.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "ELEGIES",
+        "definition": "Poems of serious reflection, typically lamenting the dead.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "ALIASES",
+        "definition": "False or assumed identities.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "SILAGE",
+        "definition": "Grass or other green fodder compacted and stored in a silo.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "AGILE",
+        "definition": "Able to move quickly and easily; mentally quick and perceptive.",
+        "partOfSpeech": "adjective"
+      },
+      {
+        "word": "ALGAE",
+        "definition": "Simple, non-flowering plants of a large group that includes seaweeds.",
+        "partOfSpeech": "noun"
+      }
+    ],
+    "bonusWords": [
+      {
+        "word": "GALES",
+        "definition": "Very strong winds.",
+        "partOfSpeech": "noun"
+      },
+      {
+        "word": "ISLES",
+        "definition": "Islands, especially small ones.",
+        "partOfSpeech": "noun"
+      }
+    ]
+  }
+]

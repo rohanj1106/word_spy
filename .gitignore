@@ -1,1 +1,28 @@
 .claude/settings.local.json
+
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/Runner/GeneratedPluginRegistrant.*
+android/.gradle/
+android/app/build/
+**/GeneratedPluginRegistrant.*
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# macOS
+*.log
+*.flutter-plugins
+*.flutter-plugins-dependencies
+*.lock
+
+# Obvious
+*.DS_Store

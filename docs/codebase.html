@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trove — Codebase Explained</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --surface: #1a1a24;
+      --border: #2a2a3a;
+      --primary: #7c6df0;
+      --accent: #f4a61d;
+      --success: #2d9b5d;
+      --text: #e8e8f0;
+      --muted: #888899;
+      --code-bg: #12121a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a1050 0%, #2d1a80 50%, #1a1050 100%);
+      padding: 64px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 { font-size: 3rem; letter-spacing: -1px; margin-bottom: 8px; }
+    header h1 span { color: var(--accent); }
+    header p { color: var(--muted); font-size: 1.1rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(15,15,19,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 40px;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      z-index: 100;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 48px 40px; }
+    section { margin-bottom: 80px; }
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    h2 .num {
+      background: var(--primary);
+      color: white;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+    }
+    h3 { font-size: 1.15rem; margin: 28px 0 12px; color: var(--accent); }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card h4 { font-size: 1rem; margin-bottom: 6px; color: var(--text); }
+    .card p { font-size: 0.9rem; color: var(--muted); }
+    .card .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .badge-flutter { background: #1a3a8f22; color: #54a0ff; border: 1px solid #54a0ff44; }
+    .badge-state   { background: #2d1a8f22; color: #a78bfa; border: 1px solid #a78bfa44; }
+    .badge-nav     { background: #8f2d1a22; color: #fb923c; border: 1px solid #fb923c44; }
+    .badge-storage { background: #1a8f2d22; color: #4ade80; border: 1px solid #4ade8044; }
+    .badge-ui      { background: #8f8f1a22; color: #fbbf24; border: 1px solid #fbbf2444; }
+    .badge-audio   { background: #8f1a6d22; color: #f472b6; border: 1px solid #f472b644; }
+
+    /* ── CODE ── */
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      overflow-x: auto;
+      margin: 16px 0;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; }
+    p code, li code {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+      color: var(--accent);
+    }
+
+    /* ── DIAGRAMS ── */
+    .diagram-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .mermaid { text-align: center; }
+
+    /* ── FILE TREE ── */
+    .tree {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+    .tree .folder { color: var(--accent); }
+    .tree .file   { color: #a0c4ff; }
+    .tree .note   { color: var(--muted); margin-left: 8px; font-style: italic; }
+
+    /* ── FLOW TABLE ── */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-left: 2px solid var(--border);
+      margin-left: 16px;
+      padding-left: 24px;
+      position: relative;
+    }
+    .flow-step::before {
+      content: '';
+      position: absolute;
+      left: -7px;
+      top: 20px;
+      width: 12px; height: 12px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
+    .flow-step:last-child { border-left: 2px solid transparent; }
+    .flow-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      padding-top: 2px;
+      min-width: 90px;
+    }
+    .flow-desc { font-size: 0.9rem; color: var(--text); }
+    .flow-desc span { color: var(--muted); font-size: 0.85rem; display: block; }
+
+    /* ── TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    th {
+      background: var(--surface);
+      padding: 10px 16px;
+      text-align: left;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: #1a1050;
+      border-left: 4px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .callout.gold { background: #201400; border-color: var(--accent); }
+    .callout.green { background: #001a0d; border-color: var(--success); }
+
+    ul { padding-left: 20px; }
+    li { margin-bottom: 6px; font-size: 0.95rem; color: var(--muted); }
+    li strong { color: var(--text); }
+    p { margin-bottom: 12px; color: var(--muted); font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>✨ <span>Trove</span> — Codebase Explained</h1>
+  <p>A complete walkthrough of every framework, pattern, and file in the project</p>
+</header>
+
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#dart">Dart Language</a>
+  <a href="#flutter">Flutter</a>
+  <a href="#packages">Packages</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#structure">File Structure</a>
+  <a href="#state">State Management</a>
+  <a href="#navigation">Navigation</a>
+  <a href="#screens">Screens</a>
+  <a href="#data">Data Layer</a>
+  <a href="#flow">Game Flow</a>
+</nav>
+
+<main>
+
+<!-- ── 1. OVERVIEW ── -->
+<section id="overview">
+  <h2><span class="num">1</span> Project Overview</h2>
+  <p>Trove is a word puzzle game inspired by Word Trip / Wordscapes. Players swipe letters to form words, unlock levels sequentially, earn coins, and listen to ambient music while playing.</p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+graph LR
+  A[📱 iPhone App] --> B[Intro Story]
+  B --> C[Home Screen]
+  C --> D[Adventure Map]
+  C --> E[Daily Challenge]
+  D --> F[Game Screen]
+  F --> G[Letter Wheel]
+  F --> H[Crossword Grid]
+  F --> I[Level Complete]
+  I --> D
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>🎯 Game Loop</h4>
+      <p>Swipe letters → form words → earn coins → complete all required words → unlock next level</p>
+    </div>
+    <div class="card">
+      <h4>💾 Data Storage</h4>
+      <p>All puzzles in JSON files. User progress (coins, completed levels) in SharedPreferences on-device.</p>
+    </div>
+    <div class="card">
+      <h4>🎨 Design</h4>
+      <p>Custom painted landscape background, Poppins typography, deep indigo + warm gold colour palette.</p>
+    </div>
+    <div class="card">
+      <h4>🔊 Audio</h4>
+      <p>Looping ambient music during gameplay. Coin sound effect on each word found.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 2. DART ── -->
+<section id="dart">
+  <h2><span class="num">2</span> Dart — The Language</h2>
+  <p>Flutter uses <strong>Dart</strong>, a language created by Google. It feels similar to JavaScript or Java but compiles to native ARM machine code — making Flutter apps as fast as native iOS/Android apps.</p>
+
+  <h3>Key Dart Features Used in Trove</h3>
+  <div class="card-grid">
+    <div class="card">
+      <h4>Null Safety</h4>
+      <p><code>String?</code> = nullable, <code>String</code> = never null. Catches bugs at compile time before they reach users.</p>
+    </div>
+    <div class="card">
+      <h4>async / await</h4>
+      <p>Loading JSON files, reading SharedPreferences — all async. Same syntax as JavaScript.</p>
+    </div>
+    <div class="card">
+      <h4>Mixins</h4>
+      <p><code>with SingleTickerProviderStateMixin</code> adds animation capability to a widget class without inheritance.</p>
+    </div>
+    <div class="card">
+      <h4>Records & Patterns</h4>
+      <p><code>(double x, double y, double scale)</code> — used in the background painter to define tree positions.</p>
+    </div>
+  </div>
+
+  <pre><code>// Dart syntax quick reference
+
+// Variables
+String name = 'Trove';
+int coins = 100;
+bool isLoading = true;
+List&lt;String&gt; words = ['WAVE', 'SEA'];
+
+// Null safety
+String? maybeNull = null;           // ok
+String neverNull = 'always here';   // compiler enforces this
+
+// Async / await
+Future&lt;void&gt; loadPuzzles() async {
+  final puzzles = await PuzzleService.loadAll();  // waits here
+  setState(() => _puzzles = puzzles);
+}
+
+// Arrow functions
+String upper(String s) =&gt; s.toUpperCase();
+
+// Pattern matching (Dart 3+)
+final (x, y, scale) = (0.5, 0.3, 1.2);  // record destructuring</code></pre>
+</section>
+
+<!-- ── 3. FLUTTER ── -->
+<section id="flutter">
+  <h2><span class="num">3</span> Flutter — The UI Framework</h2>
+  <p>Flutter is Google's cross-platform UI toolkit. Write once, run on iOS, Android, Web, Mac, Windows. Trove targets <strong>iOS + Android + Web</strong>.</p>
+
+  <div class="callout">
+    <strong>Core idea:</strong> Everything is a <strong>Widget</strong> — buttons, text, padding, animations, even the app itself. Widgets nest to form a tree. Flutter redraws the tree when state changes.
+  </div>
+
+  <h3>Widget Types</h3>
+  <div class="diagram-wrap">
+    <div class="mermaid">
+graph TD
+  W[Widget] --> SL[StatelessWidget]
+  W --> SF[StatefulWidget]
+  W --> CW[ConsumerWidget<br/>Riverpod]
+  W --> CSW[ConsumerStatefulWidget<br/>Riverpod]
+  SL --> E1["Renders from props only<br/>e.g. _LevelCard, _CoinBadge"]
+  SF --> E2["Has internal mutable state<br/>e.g. _LevelNodeState animation"]
+  CW --> E3["Reads Riverpod providers<br/>e.g. HomeScreen"]
+  CSW --> E4["Both state + providers<br/>e.g. GameScreen, LevelSelectScreen"]
+    </div>
+  </div>
+
+  <h3>The Widget Tree</h3>
+  <pre><code>// How Flutter builds UI — nested widgets form a tree
+Scaffold(
+  appBar: AppBar(title: Text('Trove')),
+  body: TroveBackground(          // custom widget
+    child: Column(
+      children: [
+        Text('Score: 100'),       // leaf widget
+        LetterWheel(              // custom widget
+          letters: ['A','B','C'],
+          onWordFormed: _onWord,
+        ),
+      ],
+    ),
+  ),
+)</code></pre>
+
+  <h3>CustomPainter — The Background</h3>
+  <p>The landscape background (sky, sun, clouds, mountains, trees) is drawn with <strong>CustomPainter</strong> — like an HTML5 Canvas. Flutter gives you a raw <code>Canvas</code> object and you draw primitives directly.</p>
+  <pre><code>class _LandscapePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Draw sky gradient
+    canvas.drawRect(skyRect, skyPaint);
+    // Draw sun
+    canvas.drawCircle(sunCenter, 20, sunPaint);
+    // Draw mountains, hills, trees...
+  }
+  @override
+  bool shouldRepaint(_LandscapePainter old) =&gt; false; // static, never repaint
+}</code></pre>
+
+  <h3>Animations</h3>
+  <table>
+    <tr><th>Animation Type</th><th>Used For</th><th>How</th></tr>
+    <tr><td>AnimationController</td><td>Intro story fade, level node pulse</td><td>Manual tick-based control</td></tr>
+    <tr><td>ScaleTransition</td><td>Current level pulsing glow</td><td>Drives scale from 1.0→1.12 repeatedly</td></tr>
+    <tr><td>FadeTransition</td><td>Level complete overlay fade-in</td><td>Opacity driven by controller</td></tr>
+    <tr><td>Timer.periodic</td><td>Coin pop float upward</td><td>Manual position update every 30ms</td></tr>
+  </table>
+</section>
+
+<!-- ── 4. PACKAGES ── -->
+<section id="packages">
+  <h2><span class="num">4</span> Packages (Dependencies)</h2>
+  <p>Packages are libraries added to <code>pubspec.yaml</code> — Flutter's equivalent of <code>package.json</code>.</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <span class="badge badge-state">State</span>
+      <h4>flutter_riverpod ^2.5.0</h4>
+      <p>State management. Providers hold state globally; widgets watch and rebuild automatically when state changes. Like React Context + hooks, but more powerful.</p>
+      <pre style="margin-top:10px;font-size:0.8rem"><code>// Define
+final coinsProvider = StateNotifierProvider(
+  (ref) =&gt; CoinsNotifier()
+);
+// Use in widget
+final coins = ref.watch(coinsProvider);</code></pre>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-nav">Navigation</span>
+      <h4>go_router ^14.0.0</h4>
+      <p>URL-based navigation. Defines routes like a web router. Handles deep links, back button, path parameters (<code>/game/:puzzleId</code>).</p>
+      <pre style="margin-top:10px;font-size:0.8rem"><code>GoRoute(
+  path: '/game/:puzzleId',
+  builder: (ctx, state) =&gt; GameScreen(
+    puzzleId: state.pathParameters['puzzleId']!,
+  ),
+)</code></pre>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-storage">Storage</span>
+      <h4>shared_preferences ^2.3.0</h4>
+      <p>Key-value storage on the device. Like localStorage in the browser. Used to persist coins, completed levels, streak, accessibility settings.</p>
+      <pre style="margin-top:10px;font-size:0.8rem"><code>final prefs = await SharedPreferences.getInstance();
+await prefs.setInt('coins', 150);
+final coins = prefs.getInt('coins') ?? 0;</code></pre>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-ui">Typography</span>
+      <h4>google_fonts ^6.2.1</h4>
+      <p>Loads Poppins font from Google Fonts CDN (cached on device after first load). Used for all text in the app.</p>
+      <pre style="margin-top:10px;font-size:0.8rem"><code>TextStyle style = GoogleFonts.poppins(
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  color: Colors.white,
+);</code></pre>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-audio">Audio</span>
+      <h4>audioplayers ^6.1.0</h4>
+      <p>Plays MP3/OGG audio files. Used for looping background music during gameplay and coin sound effect on word found.</p>
+      <pre style="margin-top:10px;font-size:0.8rem"><code>final player = AudioPlayer();
+await player.setReleaseMode(ReleaseMode.loop);
+await player.play(AssetSource('audio/bg_music.mp3'));</code></pre>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-ui">Animation</span>
+      <h4>flutter_animate ^4.5.0</h4>
+      <p>Declarative animation helpers (fade, slide, scale) with a chainable API. Imported but available for use in future UI polish.</p>
+    </div>
+
+    <div class="card">
+      <span class="badge badge-flutter">Game Engine</span>
+      <h4>flame ^1.18.0</h4>
+      <p>2D game engine built on Flutter. Provides a game loop, sprite rendering, collision detection. Imported and ready — will be used in Phase 1 for advanced gameplay mechanics.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 5. ARCHITECTURE ── -->
+<section id="architecture">
+  <h2><span class="num">5</span> Architecture — MVVM</h2>
+  <p>Trove follows <strong>MVVM</strong> — Model / ViewModel / View. Each layer has one responsibility and doesn't know about the layers above it.</p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+graph TB
+  subgraph VIEW["🖼️  VIEW  (lib/features/)"]
+    VS[GameScreen]
+    VH[HomeScreen]
+    VL[LevelSelectScreen]
+  end
+
+  subgraph VM["⚙️  VIEWMODEL  (lib/core/providers/)"]
+    P1[userProgressProvider<br/>coins · streak · completedIds]
+    P2[themeProvider<br/>font · textScale · contrast]
+  end
+
+  subgraph M["📦  MODEL  (lib/models/)"]
+    M1[Puzzle]
+    M2[Word]
+    M3[UserProgress]
+  end
+
+  subgraph S["🔧  SERVICES  (lib/core/services/)"]
+    S1[PuzzleService<br/>reads JSON]
+    S2[ProgressService<br/>SharedPreferences]
+  end
+
+  VIEW -- "ref.watch()" --> VM
+  VIEW -- "ref.read().method()" --> VM
+  VM -- "reads/writes" --> S
+  S -- "returns" --> M
+  M -- "used by" --> VM
+    </div>
+  </div>
+
+  <h3>Layer Responsibilities</h3>
+  <table>
+    <tr><th>Layer</th><th>Location</th><th>Can it touch Flutter UI?</th><th>Knows about?</th></tr>
+    <tr><td><strong>Model</strong></td><td><code>lib/models/</code></td><td>❌ No</td><td>Data only</td></tr>
+    <tr><td><strong>Service</strong></td><td><code>lib/core/services/</code></td><td>❌ No</td><td>Models + I/O</td></tr>
+    <tr><td><strong>ViewModel</strong></td><td><code>lib/core/providers/</code></td><td>❌ No</td><td>Models + Services</td></tr>
+    <tr><td><strong>View</strong></td><td><code>lib/features/</code></td><td>✅ Yes</td><td>ViewModels only</td></tr>
+  </table>
+</section>
+
+<!-- ── 6. FILE STRUCTURE ── -->
+<section id="structure">
+  <h2><span class="num">6</span> File Structure</h2>
+  <div class="tree">
+<span class="folder">trove/</span><br/>
+├── <span class="folder">lib/</span><br/>
+│   ├── <span class="file">main.dart</span>              <span class="note">← App entry point. Sets orientation, status bar, runs app.</span><br/>
+│   ├── <span class="file">app.dart</span>               <span class="note">← GoRouter setup + MaterialApp + ThemeData builder.</span><br/>
+│   │<br/>
+│   ├── <span class="folder">core/</span>                <span class="note">← Shared code used across all features</span><br/>
+│   │   ├── <span class="folder">constants/</span><br/>
+│   │   │   ├── <span class="file">app_colors.dart</span>        <span class="note">← All colours (primary, accent, success, high-contrast)</span><br/>
+│   │   │   ├── <span class="file">app_sizes.dart</span>         <span class="note">← Spacing scale: xs=4, sm=8, md=16, lg=24, xl=32</span><br/>
+│   │   │   └── <span class="file">app_typography.dart</span>    <span class="note">← Text styles using Poppins via GoogleFonts</span><br/>
+│   │   ├── <span class="folder">providers/</span><br/>
+│   │   │   ├── <span class="file">user_progress_provider.dart</span>  <span class="note">← Coins, streak, completedPuzzleIds — Riverpod StateNotifier</span><br/>
+│   │   │   └── <span class="file">theme_provider.dart</span>          <span class="note">← Font choice, text scale, high contrast toggle</span><br/>
+│   │   ├── <span class="folder">services/</span><br/>
+│   │   │   ├── <span class="file">puzzle_service.dart</span>    <span class="note">← Loads puzzles.json, parses into List&lt;Puzzle&gt;</span><br/>
+│   │   │   ├── <span class="file">progress_service.dart</span>  <span class="note">← Read/write SharedPreferences (coins, streak, etc.)</span><br/>
+│   │   │   └── <span class="file">ai_service.dart</span>        <span class="note">← Abstract AI interface + StubAiService (Phase 3)</span><br/>
+│   │   ├── <span class="folder">utils/</span><br/>
+│   │   │   └── <span class="file">word_validator.dart</span>    <span class="note">← Word validation helper (future use)</span><br/>
+│   │   └── <span class="folder">widgets/</span><br/>
+│   │       └── <span class="file">trove_background.dart</span> <span class="note">← CustomPainter landscape background used on all screens</span><br/>
+│   │<br/>
+│   ├── <span class="folder">features/</span>            <span class="note">← One folder per screen/feature (vertical slice)</span><br/>
+│   │   ├── <span class="folder">intro/screens/</span><br/>
+│   │   │   └── <span class="file">intro_story_screen.dart</span>    <span class="note">← 4-page animated cinematic. Twinkling stars, TROVE reveal.</span><br/>
+│   │   ├── <span class="folder">home/screens/</span><br/>
+│   │   │   └── <span class="file">home_screen.dart</span>           <span class="note">← Logo, coin badge, daily challenge card, Play button.</span><br/>
+│   │   ├── <span class="folder">levels/screens/</span><br/>
+│   │   │   └── <span class="file">level_select_screen.dart</span>   <span class="note">← Snake-path adventure map. Sequential unlocking.</span><br/>
+│   │   ├── <span class="folder">game/</span><br/>
+│   │   │   ├── <span class="folder">screens/</span><br/>
+│   │   │   │   └── <span class="file">game_screen.dart</span>       <span class="note">← Main gameplay. Word detection, coins, audio, completion.</span><br/>
+│   │   │   └── <span class="folder">widgets/</span><br/>
+│   │   │       ├── <span class="file">letter_wheel.dart</span>      <span class="note">← Swipe gesture letter selector with CustomPaint connection lines.</span><br/>
+│   │   │       └── <span class="file">crossword_grid.dart</span>    <span class="note">← Word grid display with found/unfound states.</span><br/>
+│   │   ├── <span class="folder">daily_challenge/screens/</span><br/>
+│   │   │   └── <span class="file">daily_challenge_screen.dart</span>  <span class="note">← Stub. Will load today's puzzle by date.</span><br/>
+│   │   └── <span class="folder">settings/screens/</span><br/>
+│   │       └── <span class="file">settings_screen.dart</span>     <span class="note">← Font, text scale, high contrast toggles.</span><br/>
+│   │<br/>
+│   └── <span class="folder">models/</span>              <span class="note">← Pure data classes, no Flutter imports</span><br/>
+│       ├── <span class="file">puzzle.dart</span>              <span class="note">← Puzzle, Difficulty enum (beginner/explorer/voyager)</span><br/>
+│       ├── <span class="file">word.dart</span>                <span class="note">← Word, definition, partOfSpeech, etymology</span><br/>
+│       └── <span class="file">user_progress.dart</span>       <span class="note">← UserProgress data class with copyWith()</span><br/>
+│<br/>
+├── <span class="folder">assets/</span><br/>
+│   ├── <span class="folder">puzzles/</span><br/>
+│   │   ├── <span class="file">puzzles.json</span>         <span class="note">← 5 hand-crafted puzzles (3 beginner, 1 explorer, 1 voyager)</span><br/>
+│   │   └── <span class="file">daily_challenges.json</span> <span class="note">← Maps date strings to puzzle IDs</span><br/>
+│   └── <span class="folder">audio/</span><br/>
+│       ├── <span class="file">bg_music.mp3</span>         <span class="note">← Looping ambient music (CC0 from OpenGameArt)</span><br/>
+│       └── <span class="file">coin.mp3</span>             <span class="note">← Coin collect sound (CC0 from OpenGameArt)</span><br/>
+│<br/>
+└── <span class="file">pubspec.yaml</span>             <span class="note">← Dependencies + asset registration (like package.json)</span><br/>
+  </div>
+</section>
+
+<!-- ── 7. STATE MANAGEMENT ── -->
+<section id="state">
+  <h2><span class="num">7</span> State Management — Riverpod</h2>
+  <p>Riverpod is like a global store. Any widget anywhere in the app can read or watch any provider. When state changes, only the widgets that watch that provider rebuild.</p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+sequenceDiagram
+  participant GS as GameScreen
+  participant P as userProgressProvider
+  participant N as UserProgressNotifier
+  participant SP as SharedPreferences
+
+  GS->>P: ref.watch(userProgressProvider)
+  P-->>GS: UserProgress(coins: 50)
+  GS->>N: ref.read(...).addCoins(10)
+  N->>SP: prefs.setInt('coins', 60)
+  N->>N: state = state.copyWith(coins: 60)
+  N-->>GS: rebuild triggered
+  GS-->>GS: shows coins: 60
+    </div>
+  </div>
+
+  <h3>Two Types of Usage</h3>
+  <pre><code>// WATCH — rebuilds widget when value changes
+final progress = ref.watch(userProgressProvider);
+Text('${progress.coins} coins')  // updates automatically
+
+// READ — one-time action, doesn't rebuild
+ref.read(userProgressProvider.notifier).addCoins(10);</code></pre>
+
+  <h3>Providers in Trove</h3>
+  <table>
+    <tr><th>Provider</th><th>State</th><th>Actions</th></tr>
+    <tr><td><code>userProgressProvider</code></td><td>coins, streak, completedPuzzleIds, isPremium</td><td>addCoins, spendCoins, markPuzzleComplete</td></tr>
+    <tr><td><code>themeProvider</code></td><td>font (poppins/opendyslexic), textScale, highContrast</td><td>setFont, setTextScale, toggleContrast</td></tr>
+  </table>
+</section>
+
+<!-- ── 8. NAVIGATION ── -->
+<section id="navigation">
+  <h2><span class="num">8</span> Navigation — GoRouter</h2>
+  <p>GoRouter treats navigation like URLs. Every screen has a path. You push, pop, or go to paths — just like a website.</p>
+
+  <div class="diagram-wrap">
+    <div class="mermaid">
+graph LR
+  INTRO["/intro<br/>IntroStoryScreen"] --> HOME
+  HOME["/<br/>HomeScreen"] --> LEVELS
+  HOME --> DAILY["/daily<br/>DailyChallengeScreen"]
+  HOME --> SETTINGS["/settings<br/>SettingsScreen"]
+  LEVELS["/levels<br/>LevelSelectScreen"] --> GAME
+  GAME["/game/:puzzleId<br/>GameScreen"] --> LEVELS
+    </div>
+  </div>
+
+  <pre><code>// Navigate forward (adds to history stack)
+context.push('/levels');
+
+// Navigate and replace (no back button)
+context.go('/');
+
+// Navigate with parameter
+context.push('/game/p001');
+
+// Go back
+context.pop();</code></pre>
+</section>
+
+<!-- ── 9. SCREENS ── -->
+<section id="screens">
+  <h2><span class="num">9</span> Screens Explained</h2>
+
+  <h3>IntroStoryScreen</h3>
+  <div class="card">
+    <p>4-page cinematic sequence. Uses <code>AnimationController</code> with <code>repeat()</code> for twinkling stars. Each page fades in text with <code>FadeTransition + SlideTransition</code>. A <code>Timer</code> auto-advances pages every 4 seconds. Last page shows the TROVE logo with a gold <code>ShaderMask</code> and a "Begin Adventure" button that navigates to <code>/</code>.</p>
+  </div>
+
+  <h3>HomeScreen</h3>
+  <div class="card">
+    <p>Shows the app logo, live coin count (from <code>userProgressProvider</code>), a daily challenge card with today's date, and the Play button that goes to <code>/levels</code>. The coin badge rebuilds automatically whenever coins change.</p>
+  </div>
+
+  <h3>LevelSelectScreen — Adventure Map</h3>
+  <div class="card">
+    <p>Uses <code>LayoutBuilder</code> to get screen width, then calculates node positions in a snake pattern using x-fractions <code>[0.72, 0.50, 0.28, 0.50]</code>. A <code>CustomPainter</code> draws the path between nodes — solid green for completed segments, dashed white for locked ones (using <code>PathMetrics</code> to extract dash segments). Level nodes are <code>StatefulWidget</code>s with <code>AnimationController</code> for the current level's pulsing glow. <code>SingleChildScrollView(reverse: true)</code> means level 1 appears at the bottom on load.</p>
+  </div>
+
+  <h3>GameScreen</h3>
+  <div class="card">
+    <p>The main gameplay screen. Loads puzzle by ID from <code>PuzzleService</code>. Starts background music on <code>initState</code>. Tracks found words in a <code>Set&lt;String&gt;</code>. On each word: adds coins, plays coin sound, checks if all required words found → triggers level complete. The coin pop animation uses <code>Timer.periodic</code> to move <code>_CoinPop</code> objects upward and fade them out over 1.2 seconds.</p>
+  </div>
+
+  <h3>LetterWheel</h3>
+  <div class="card">
+    <p>Swipe gesture recognition using <code>GestureDetector onPanStart/onPanUpdate/onPanEnd</code>. Each letter has a <code>GlobalKey</code>. On pan update, <code>RenderBox.globalToLocal()</code> converts finger position to wheel coordinates, then checks distance from each letter center. Selected letters are highlighted with <code>AnimatedContainer</code>. A <code>CustomPaint</code> overlay draws connection lines between selected letters.</p>
+  </div>
+</section>
+
+<!-- ── 10. DATA LAYER ── -->
+<section id="data">
+  <h2><span class="num">10</span> Data Layer</h2>
+
+  <h3>Puzzle JSON Schema</h3>
+  <pre><code>{
+  "id": "p001",
+  "theme": "Ocean",
+  "difficulty": "beginner",        // beginner | explorer | voyager
+  "letterSet": ["S","E","A","W","V","E"],
+  "requiredWords": [
+    {
+      "word": "WAVE",
+      "definition": "A ridge of water moving across the surface.",
+      "partOfSpeech": "noun"
+    }
+  ],
+  "bonusWords": [
+    {
+      "word": "AWE",
+      "definition": "A feeling of reverential wonder.",
+      "partOfSpeech": "noun"
+    }
+  ]
+}</code></pre>
+
+  <h3>SharedPreferences Keys</h3>
+  <table>
+    <tr><th>Key</th><th>Type</th><th>Default</th><th>Purpose</th></tr>
+    <tr><td><code>coins</code></td><td>int</td><td>20</td><td>Currency for hints</td></tr>
+    <tr><td><code>streak</code></td><td>int</td><td>0</td><td>Daily play streak</td></tr>
+    <tr><td><code>completed_puzzle_ids</code></td><td>List&lt;String&gt;</td><td>[]</td><td>Which levels are done</td></tr>
+    <tr><td><code>last_daily_date</code></td><td>String</td><td>""</td><td>For streak calculation</td></tr>
+    <tr><td><code>font_preference</code></td><td>String</td><td>"poppins"</td><td>Accessibility</td></tr>
+    <tr><td><code>text_size_scale</code></td><td>double</td><td>1.0</td><td>Accessibility</td></tr>
+    <tr><td><code>high_contrast</code></td><td>bool</td><td>false</td><td>Accessibility</td></tr>
+  </table>
+</section>
+
+<!-- ── 11. GAME FLOW ── -->
+<section id="flow">
+  <h2><span class="num">11</span> Full Game Flow</h2>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-label">App Launch</div>
+      <div class="flow-desc">
+        <code>main()</code> runs. Sets portrait orientation, transparent status bar. Always routes to <code>/intro</code>.
+        <span>main.dart → TroveApp(initialRoute: '/intro')</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Intro Story</div>
+      <div class="flow-desc">
+        4-page cinematic with stars, darkness lifting, TROVE logo. Auto-advances every 4s or user taps.
+        <span>IntroStoryScreen → context.go('/')</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Home Screen</div>
+      <div class="flow-desc">
+        Shows coin count from Riverpod, daily challenge card, Play button.
+        <span>HomeScreen → context.push('/levels')</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Adventure Map</div>
+      <div class="flow-desc">
+        Loads all puzzles. Draws snake path. Level 1 always unlocked. Others require previous completion. Current level pulses.
+        <span>LevelSelectScreen → context.push('/game/p001')</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Game Screen</div>
+      <div class="flow-desc">
+        Loads puzzle JSON. Starts bg music. Player swipes letters to form words.
+        <span>_audioPlayer.play(bg_music.mp3)</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Word Found</div>
+      <div class="flow-desc">
+        Word matches required (+10 coins) or bonus (+5 coins). Coin pop animation + coin sound. Progress counter updates.
+        <span>_awardCoins() → addCoins() → SharedPreferences</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Level Complete</div>
+      <div class="flow-desc">
+        All required words found. markPuzzleComplete() saves to SharedPreferences. Overlay animates in.
+        <span>_LevelCompleteOverlay → context.go('/levels')</span>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-label">Map Updated</div>
+      <div class="flow-desc">
+        Adventure map reloads. Completed level is now green. Next level is unlocked and pulsing.
+        <span>completedIds now includes p001 → p002 unlocked</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <strong>Data persistence:</strong> Coins and completed levels survive app restarts because they're saved to SharedPreferences (on-device storage) every time they change.
+  </div>
+</section>
+
+</main>
+
+<footer style="text-align:center;padding:40px;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:40px;">
+  Trove Codebase Documentation · Built with Flutter 3.41.2 · Dart 3
+</footer>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      primaryColor: '#3D2B8F',
+      primaryTextColor: '#e8e8f0',
+      primaryBorderColor: '#7c6df0',
+      lineColor: '#F4A61D',
+      secondaryColor: '#1a1a24',
+      tertiaryColor: '#12121a',
+      background: '#0f0f13',
+      mainBkg: '#1a1a24',
+      nodeBorder: '#2a2a3a',
+      clusterBkg: '#12121a',
+      titleColor: '#e8e8f0',
+      edgeLabelBackground: '#1a1a24',
+      fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+    }
+  });
+</script>
+</body>
+</html>

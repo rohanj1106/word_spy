@@ -1,4 +1,4 @@
-# Trove — Word Puzzle Game
+# Word Spy — Word Puzzle Game
 
 A word puzzle game built with Flutter, inspired by Word Trip.
 

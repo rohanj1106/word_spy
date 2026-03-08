@@ -1,0 +1,493 @@
+[
+  {
+    "id": "london",
+    "city": "London",
+    "country": "United Kingdom",
+    "tagline": "Fog, Tea & Double-Deckers",
+    "flag": "🇬🇧",
+    "coinsToUnlock": 0,
+    "postcard": {
+      "storyTitle": "A Postcard from London",
+      "storyLines": [
+        "Arthur,",
+        "The fog rolled in early this morning.",
+        "Found a little tea shop near the Tower.",
+        "Red buses everywhere — just like you said!",
+        "The guards didn't crack a single smile.",
+        "Had a scone with clotted cream.",
+        "Spotted a raven near the palace.",
+        "Took the Tube to Camden Market.",
+        "Tomorrow — Big Ben at sunrise.",
+        "Wish you were here. — Evelyn."
+      ],
+      "fullImagePath": "assets/chapters/postcards/london/postcard_full.png",
+      "fragmentPaths": [
+        "assets/chapters/postcards/london/fragment_01.png",
+        "assets/chapters/postcards/london/fragment_02.png",
+        "assets/chapters/postcards/london/fragment_03.png",
+        "assets/chapters/postcards/london/fragment_04.png",
+        "assets/chapters/postcards/london/fragment_05.png",
+        "assets/chapters/postcards/london/fragment_06.png",
+        "assets/chapters/postcards/london/fragment_07.png",
+        "assets/chapters/postcards/london/fragment_08.png",
+        "assets/chapters/postcards/london/fragment_09.png",
+        "assets/chapters/postcards/london/fragment_10.png"
+      ]
+    },
+    "puzzles": [
+      {
+        "id": "london_01",
+        "chapterId": "london",
+        "number": 1,
+        "grid": [
+          ["T", "E", "A", "B", "C", "D"],
+          ["A", "R", "L", "M", "N", "O"],
+          ["P", "O", "E", "T", "S", "F"],
+          ["O", "H", "I", "J", "K", "L"],
+          ["T", "N", "U", "W", "X", "Y"],
+          ["S", "V", "Z", "Q", "R", "B"]
+        ],
+        "words": [
+          { "word": "TEA",  "definition": "A hot drink brewed from dried leaves.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "TAP",  "definition": "A device for controlling the flow of liquid.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "vertical", "isBonus": false },
+          { "word": "POT",  "definition": "A rounded container used for cooking.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "vertical", "isBonus": false },
+          { "word": "POET", "definition": "A person who writes poems.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Arthur,"
+      },
+      {
+        "id": "london_02",
+        "chapterId": "london",
+        "number": 2,
+        "grid": [
+          ["F", "L", "O", "W", "S", "T"],
+          ["O", "A", "B", "C", "D", "E"],
+          ["G", "L", "O", "W", "L", "M"],
+          ["N", "I", "J", "K", "P", "Q"],
+          ["R", "S", "U", "V", "X", "Y"],
+          ["Z", "H", "B", "C", "D", "F"]
+        ],
+        "words": [
+          { "word": "FOG",  "definition": "Thick cloud of tiny water droplets near the ground.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "vertical", "isBonus": false },
+          { "word": "FLOW", "definition": "Move steadily in a current.", "partOfSpeech": "verb", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "OWL",  "definition": "A bird of prey active at night.", "partOfSpeech": "noun", "startRow": 2, "startCol": 2, "direction": "horizontal", "isBonus": false },
+          { "word": "GLOW", "definition": "Emit a steady light.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "The fog rolled in early this morning."
+      },
+      {
+        "id": "london_03",
+        "chapterId": "london",
+        "number": 3,
+        "grid": [
+          ["T", "O", "W", "E", "R", "A", "B"],
+          ["S", "T", "O", "R", "E", "C", "D"],
+          ["W", "O", "R", "E", "F", "G", "H"],
+          ["S", "T", "R", "E", "W", "I", "J"],
+          ["K", "L", "M", "N", "O", "P", "Q"],
+          ["R", "S", "T", "U", "V", "X", "Y"],
+          ["Z", "A", "B", "C", "D", "E", "F"]
+        ],
+        "words": [
+          { "word": "TOWER", "definition": "A tall narrow building or structure.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "STORE", "definition": "A place where goods are sold.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "WORE",  "definition": "Past tense of wear.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "STREW", "definition": "Scatter over a surface.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Found a little tea shop near the Tower."
+      },
+      {
+        "id": "london_04",
+        "chapterId": "london",
+        "number": 4,
+        "grid": [
+          ["R", "U", "B", "A", "C", "F", "G"],
+          ["E", "J", "K", "L", "M", "N", "O"],
+          ["D", "O", "P", "Q", "T", "V", "W"],
+          ["B", "U", "S", "G", "H", "I", "J"],
+          ["R", "E", "D", "K", "L", "M", "N"],
+          ["R", "U", "D", "E", "O", "P", "Q"],
+          ["X", "Y", "Z", "B", "C", "D", "F"]
+        ],
+        "words": [
+          { "word": "RUB",  "definition": "Move back and forth with pressure.", "partOfSpeech": "verb", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "BUS",  "definition": "A large motor vehicle for passengers.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RED",  "definition": "The colour of blood or fire.", "partOfSpeech": "adjective", "startRow": 4, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RUDE", "definition": "Offensively impolite.", "partOfSpeech": "adjective", "startRow": 5, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Red buses everywhere — just like you said!"
+      },
+      {
+        "id": "london_05",
+        "chapterId": "london",
+        "number": 5,
+        "grid": [
+          ["G", "U", "A", "R", "D", "A", "B"],
+          ["R", "A", "G", "S", "C", "D", "E"],
+          ["F", "H", "I", "J", "K", "L", "M"],
+          ["D", "R", "A", "G", "S", "N", "O"],
+          ["P", "Q", "T", "V", "W", "X", "Y"],
+          ["Z", "A", "B", "C", "F", "G", "H"],
+          ["I", "J", "K", "L", "M", "N", "O"]
+        ],
+        "words": [
+          { "word": "GUARD", "definition": "A person who keeps watch to protect.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RAGS",  "definition": "Torn or worn pieces of cloth.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "DRAGS", "definition": "Pulls along the ground.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "The guards didn't crack a single smile."
+      },
+      {
+        "id": "london_06",
+        "chapterId": "london",
+        "number": 6,
+        "grid": [
+          ["S", "C", "O", "N", "E", "A", "B"],
+          ["C", "O", "N", "E", "S", "C", "D"],
+          ["O", "N", "C", "E", "F", "G", "H"],
+          ["I", "J", "K", "L", "M", "P", "Q"],
+          ["R", "T", "U", "V", "W", "X", "Y"],
+          ["Z", "A", "B", "C", "D", "F", "G"],
+          ["H", "I", "J", "K", "L", "M", "N"]
+        ],
+        "words": [
+          { "word": "SCONE", "definition": "A small baked cake, often eaten with cream.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "CONE",  "definition": "A solid shape tapering to a point.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "ONCE",  "definition": "On one occasion only.", "partOfSpeech": "adverb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "CONES", "definition": "Plural of cone.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Had a scone with clotted cream."
+      },
+      {
+        "id": "london_07",
+        "chapterId": "london",
+        "number": 7,
+        "grid": [
+          ["R", "A", "V", "E", "N", "S", "A"],
+          ["E", "A", "R", "N", "C", "D", "F"],
+          ["A", "V", "A", "N", "E", "G", "H"],
+          ["R", "B", "I", "J", "K", "L", "M"],
+          ["N", "O", "P", "Q", "T", "U", "V"],
+          ["A", "W", "X", "Y", "Z", "B", "C"],
+          ["D", "F", "G", "H", "I", "J", "K"]
+        ],
+        "words": [
+          { "word": "RAVEN",  "definition": "A large black crow with a hoarse cry.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "EARN",   "definition": "Receive money as payment for work.", "partOfSpeech": "verb", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "VANE",   "definition": "A device that shows wind direction.", "partOfSpeech": "noun", "startRow": 2, "startCol": 1, "direction": "horizontal", "isBonus": false },
+          { "word": "RAVENS", "definition": "Plural of raven.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Spotted a raven near the palace."
+      },
+      {
+        "id": "london_08",
+        "chapterId": "london",
+        "number": 8,
+        "grid": [
+          ["T", "U", "B", "E", "A", "B", "C"],
+          ["B", "I", "L", "E", "D", "F", "G"],
+          ["L", "I", "T", "E", "H", "I", "J"],
+          ["B", "U", "I", "L", "T", "K", "L"],
+          ["M", "N", "O", "P", "Q", "R", "S"],
+          ["T", "U", "V", "W", "X", "Y", "Z"],
+          ["A", "B", "C", "D", "F", "G", "H"]
+        ],
+        "words": [
+          { "word": "TUBE",  "definition": "A long hollow cylinder; London's underground railway.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "BILE",  "definition": "A bitter fluid produced by the liver.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "LITE",  "definition": "Low in calories or simplified.", "partOfSpeech": "adjective", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "BUILT", "definition": "Constructed something.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Took the Tube to Camden Market."
+      },
+      {
+        "id": "london_09",
+        "chapterId": "london",
+        "number": 9,
+        "grid": [
+          ["B", "I", "G", "A", "C", "D"],
+          ["B", "E", "N", "F", "H", "I"],
+          ["G", "I", "N", "K", "L", "M"],
+          ["B", "I", "N", "G", "E", "O"],
+          ["P", "Q", "R", "S", "T", "U"],
+          ["V", "W", "X", "Y", "Z", "A"]
+        ],
+        "words": [
+          { "word": "BIG",   "definition": "Of considerable size.", "partOfSpeech": "adjective", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "BEN",   "definition": "A high mountain peak (Scottish).", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "GIN",   "definition": "A clear spirit flavoured with juniper berries.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "BINGE", "definition": "Indulge in an activity excessively.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Tomorrow — Big Ben at sunrise."
+      },
+      {
+        "id": "london_10",
+        "chapterId": "london",
+        "number": 10,
+        "grid": [
+          ["W", "I", "S", "H", "A", "B", "C"],
+          ["S", "I", "D", "E", "D", "F", "G"],
+          ["H", "I", "D", "E", "S", "H", "I"],
+          ["W", "I", "S", "H", "E", "D", "J"],
+          ["K", "L", "M", "N", "O", "P", "Q"],
+          ["R", "T", "U", "V", "W", "X", "Y"],
+          ["Z", "A", "B", "C", "D", "F", "G"]
+        ],
+        "words": [
+          { "word": "WISH",   "definition": "A desire or hope for something.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "SIDE",   "definition": "A position to the left or right.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "HIDES",  "definition": "Keeps out of sight.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "WISHED", "definition": "Past tense of wish.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Wish you were here. — Evelyn."
+      }
+    ]
+  },
+  {
+    "id": "paris",
+    "city": "Paris",
+    "country": "France",
+    "tagline": "Love, Lights & Croissants",
+    "flag": "🇫🇷",
+    "coinsToUnlock": 50,
+    "postcard": {
+      "storyTitle": "A Postcard from Paris",
+      "storyLines": [
+        "Mon ami Arthur,",
+        "Paris is even more beautiful in spring.",
+        "The Eiffel Tower glowed gold at night.",
+        "I ate a croissant by the Seine.",
+        "Found a rose seller near Notre-Dame.",
+        "The Louvre took the whole afternoon.",
+        "Café au lait on a tiny balcony.",
+        "The Metro smells like the one in London.",
+        "Bought you a small painting from Montmartre.",
+        "À bientôt! — Evelyn."
+      ],
+      "fullImagePath": "assets/chapters/postcards/paris/postcard_full.png",
+      "fragmentPaths": [
+        "assets/chapters/postcards/paris/fragment_01.png",
+        "assets/chapters/postcards/paris/fragment_02.png",
+        "assets/chapters/postcards/paris/fragment_03.png",
+        "assets/chapters/postcards/paris/fragment_04.png",
+        "assets/chapters/postcards/paris/fragment_05.png",
+        "assets/chapters/postcards/paris/fragment_06.png",
+        "assets/chapters/postcards/paris/fragment_07.png",
+        "assets/chapters/postcards/paris/fragment_08.png",
+        "assets/chapters/postcards/paris/fragment_09.png",
+        "assets/chapters/postcards/paris/fragment_10.png"
+      ]
+    },
+    "puzzles": [
+      {
+        "id": "paris_01",
+        "chapterId": "paris",
+        "number": 1,
+        "grid": [
+          ["O", "U", "R", "A", "B", "C", "D"],
+          ["R", "O", "A", "M", "E", "F", "G"],
+          ["A", "R", "M", "S", "H", "I", "J"],
+          ["A", "M", "O", "U", "R", "K", "L"],
+          ["S", "N", "P", "Q", "T", "V", "W"],
+          ["X", "Y", "Z", "B", "C", "D", "F"],
+          ["G", "H", "I", "J", "K", "L", "M"]
+        ],
+        "words": [
+          { "word": "OUR",   "definition": "Belonging to us.", "partOfSpeech": "pronoun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "ROAM",  "definition": "Move about freely.", "partOfSpeech": "verb", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "ARMS",  "definition": "The upper limbs of the body.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "AMOUR", "definition": "A love affair, especially a secret one.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Mon ami Arthur,"
+      },
+      {
+        "id": "paris_02",
+        "chapterId": "paris",
+        "number": 2,
+        "grid": [
+          ["S", "P", "R", "I", "N", "G", "A"],
+          ["R", "I", "N", "G", "B", "C", "D"],
+          ["G", "R", "I", "P", "E", "F", "G"],
+          ["P", "R", "I", "G", "S", "H", "I"],
+          ["J", "K", "L", "M", "N", "O", "Q"],
+          ["T", "U", "V", "W", "X", "Y", "Z"],
+          ["A", "B", "C", "D", "F", "G", "H"]
+        ],
+        "words": [
+          { "word": "SPRING", "definition": "The season after winter when plants grow.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RING",   "definition": "A circular band; or a sharp sound.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "GRIP",   "definition": "Hold firmly.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "PRIGS",  "definition": "People who display their virtue smugly.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Paris is even more beautiful in spring."
+      },
+      {
+        "id": "paris_03",
+        "chapterId": "paris",
+        "number": 3,
+        "grid": [
+          ["T", "O", "W", "E", "R", "A", "B"],
+          ["G", "R", "E", "W", "C", "D", "F"],
+          ["W", "O", "R", "E", "G", "H", "I"],
+          ["J", "K", "L", "M", "N", "O", "P"],
+          ["Q", "R", "S", "T", "U", "V", "W"],
+          ["X", "Y", "Z", "A", "B", "C", "D"],
+          ["F", "G", "H", "I", "J", "K", "L"]
+        ],
+        "words": [
+          { "word": "TOWER", "definition": "A tall structure that stands alone.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "GREW",  "definition": "Past tense of grow.", "partOfSpeech": "verb", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "WORE",  "definition": "Past tense of wear.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false }
+        ],
+        "postcardHint": "The Eiffel Tower glowed gold at night."
+      },
+      {
+        "id": "paris_04",
+        "chapterId": "paris",
+        "number": 4,
+        "grid": [
+          ["R", "I", "C", "E", "A", "B", "C"],
+          ["C", "O", "R", "E", "D", "F", "G"],
+          ["R", "I", "S", "E", "H", "I", "J"],
+          ["C", "R", "I", "E", "S", "K", "L"],
+          ["S", "C", "O", "R", "E", "M", "N"],
+          ["O", "P", "Q", "T", "U", "V", "W"],
+          ["X", "Y", "Z", "A", "B", "C", "D"]
+        ],
+        "words": [
+          { "word": "RICE",  "definition": "A grain used as a staple food.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "CORE",  "definition": "The central part of something.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RISE",  "definition": "Move upward.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "CRIES", "definition": "Shouts or weeps.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true },
+          { "word": "SCORE", "definition": "A number of points earned.", "partOfSpeech": "noun", "startRow": 4, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "I ate a croissant by the Seine."
+      },
+      {
+        "id": "paris_05",
+        "chapterId": "paris",
+        "number": 5,
+        "grid": [
+          ["R", "O", "S", "E", "A", "B", "C"],
+          ["S", "O", "L", "E", "D", "F", "G"],
+          ["L", "O", "S", "E", "H", "I", "J"],
+          ["R", "O", "L", "E", "S", "K", "L"],
+          ["M", "N", "O", "P", "Q", "T", "U"],
+          ["V", "W", "X", "Y", "Z", "A", "B"],
+          ["C", "D", "F", "G", "H", "I", "J"]
+        ],
+        "words": [
+          { "word": "ROSE",  "definition": "A fragrant flower with thorned stems.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "SOLE",  "definition": "One and only.", "partOfSpeech": "adjective", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "LOSE",  "definition": "Fail to keep or win.", "partOfSpeech": "verb", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "ROLES", "definition": "Parts played by actors.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Found a rose seller near Notre-Dame."
+      },
+      {
+        "id": "paris_06",
+        "chapterId": "paris",
+        "number": 6,
+        "grid": [
+          ["L", "O", "V", "E", "A", "B", "C"],
+          ["R", "U", "L", "E", "D", "F", "G"],
+          ["L", "O", "R", "E", "H", "I", "J"],
+          ["L", "O", "V", "E", "R", "K", "L"],
+          ["R", "U", "L", "E", "R", "M", "N"],
+          ["O", "P", "Q", "T", "U", "V", "W"],
+          ["X", "Y", "Z", "A", "B", "C", "D"]
+        ],
+        "words": [
+          { "word": "LOVE",  "definition": "An intense feeling of deep affection.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "RULE",  "definition": "A principle governing conduct.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "LORE",  "definition": "A body of traditions and knowledge.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "LOVER", "definition": "A person in a romantic relationship.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true },
+          { "word": "RULER", "definition": "A person who rules; or a measuring stick.", "partOfSpeech": "noun", "startRow": 4, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "The Louvre took the whole afternoon."
+      },
+      {
+        "id": "paris_07",
+        "chapterId": "paris",
+        "number": 7,
+        "grid": [
+          ["C", "A", "F", "E", "A", "B", "C"],
+          ["F", "A", "C", "E", "D", "F", "G"],
+          ["F", "A", "S", "T", "H", "I", "J"],
+          ["F", "E", "A", "S", "T", "K", "L"],
+          ["M", "N", "O", "P", "Q", "T", "U"],
+          ["V", "W", "X", "Y", "Z", "A", "B"],
+          ["C", "D", "F", "G", "H", "I", "J"]
+        ],
+        "words": [
+          { "word": "CAFE",  "definition": "A small restaurant serving light meals and drinks.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "FACE",  "definition": "The front part of a person's head.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "FAST",  "definition": "Moving quickly.", "partOfSpeech": "adjective", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "FEAST", "definition": "A large meal.", "partOfSpeech": "noun", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Café au lait on a tiny balcony."
+      },
+      {
+        "id": "paris_08",
+        "chapterId": "paris",
+        "number": 8,
+        "grid": [
+          ["M", "E", "T", "R", "O", "A", "B"],
+          ["S", "T", "O", "R", "E", "C", "D"],
+          ["M", "O", "S", "T", "F", "G", "H"],
+          ["I", "J", "K", "L", "M", "N", "O"],
+          ["P", "Q", "R", "S", "T", "U", "V"],
+          ["W", "X", "Y", "Z", "A", "B", "C"],
+          ["D", "F", "G", "H", "I", "J", "K"]
+        ],
+        "words": [
+          { "word": "METRO", "definition": "An underground urban railway system.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "STORE", "definition": "A place where goods are sold.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "MOST",  "definition": "The greatest amount.", "partOfSpeech": "determiner", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false }
+        ],
+        "postcardHint": "The Metro smells like the one in London."
+      },
+      {
+        "id": "paris_09",
+        "chapterId": "paris",
+        "number": 9,
+        "grid": [
+          ["P", "A", "I", "N", "T", "A", "B"],
+          ["S", "A", "I", "N", "T", "C", "D"],
+          ["P", "I", "N", "T", "S", "F", "G"],
+          ["T", "A", "I", "N", "T", "S", "H"],
+          ["I", "J", "K", "L", "M", "O", "P"],
+          ["Q", "R", "T", "U", "V", "W", "X"],
+          ["Y", "Z", "A", "B", "C", "D", "F"]
+        ],
+        "words": [
+          { "word": "PAINT",  "definition": "A coloured substance used to decorate surfaces.", "partOfSpeech": "noun", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "SAINT",  "definition": "A person of great holiness.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "PINTS",  "definition": "Units of liquid measure.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "TAINTS", "definition": "Contaminates or spoils.", "partOfSpeech": "verb", "startRow": 3, "startCol": 0, "direction": "horizontal", "isBonus": true }
+        ],
+        "postcardHint": "Bought you a small painting from Montmartre."
+      },
+      {
+        "id": "paris_10",
+        "chapterId": "paris",
+        "number": 10,
+        "grid": [
+          ["A", "D", "I", "E", "U", "A", "B"],
+          ["I", "D", "E", "A", "C", "D", "F"],
+          ["A", "I", "D", "E", "G", "H", "I"],
+          ["J", "K", "L", "M", "N", "O", "P"],
+          ["Q", "R", "S", "T", "U", "V", "W"],
+          ["X", "Y", "Z", "A", "B", "C", "D"],
+          ["F", "G", "H", "I", "J", "K", "L"]
+        ],
+        "words": [
+          { "word": "ADIEU", "definition": "A farewell; goodbye (French).", "partOfSpeech": "exclamation", "startRow": 0, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "IDEA",  "definition": "A thought or plan.", "partOfSpeech": "noun", "startRow": 1, "startCol": 0, "direction": "horizontal", "isBonus": false },
+          { "word": "AIDE",  "definition": "An assistant to a leader.", "partOfSpeech": "noun", "startRow": 2, "startCol": 0, "direction": "horizontal", "isBonus": false }
+        ],
+        "postcardHint": "À bientôt! — Evelyn."
+      }
+    ]
+  }
+]
