@@ -26,3 +26,4 @@ android/app/build/
 
 # Obvious
 *.DS_Store
+trove/
